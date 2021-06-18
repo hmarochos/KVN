@@ -1,0 +1,70 @@
+<div [ngStyle]="{'height': 0.8*this.yearPlan.affordedWishesOverviewPlus5List.length * this.size + 'em'}"
+     style="overflow: auto">
+
+  <table class="w-100">
+    <thead>
+    <tr class="text-center">
+      <th
+        [ngStyle]="{'font-size': 0.33*this.size + 'em', 'padding-top': this.size + 'px','padding-bottom': this.size + 'px'}">
+        Case
+      </th>
+      <th
+        [ngStyle]="{'font-size': 0.33*this.size + 'em', 'padding-top': this.size + 'px','padding-bottom': this.size + 'px'}"
+        class="colorMinusFive">-5%
+      </th>
+      <th
+        [ngStyle]="{'font-size': 0.33*this.size + 'em', 'padding-top': this.size + 'px','padding-bottom': this.size + 'px'}"
+        class="colorMinusTwo">
+        -2.5%
+      </th>
+      <th
+        [ngStyle]="{'font-size': 0.33*this.size + 'em', 'padding-top': this.size + 'px','padding-bottom': this.size + 'px'}"
+        class="colorZero">0%
+      </th>
+      <th
+        [ngStyle]="{'font-size': 0.33*this.size + 'em', 'padding-top': this.size + 'px','padding-bottom': this.size + 'px'}"
+        class="colorPlusTwo">2.5%
+      </th>
+      <th
+        [ngStyle]="{'font-size': 0.33*this.size + 'em', 'padding-top': this.size + 'px','padding-bottom': this.size + 'px'}"
+        class="colorPlusFive">5%
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let yearPlanItems of this.yearPlan.affordedWishesOverviewPlus5List;let index = index"
+        [attr.data-index]="index" style="border-top: 1px solid #ccc">
+      <td
+        [ngStyle]="{'font-size': 0.25*this.size + 'em', 'padding-top': 1.5*this.size + 'px', 'padding-bottom': 1.5*this.size + 'px'}"
+        class="font-weight-bold text-left"
+        style="white-space: nowrap">{{this.getName(yearPlanItems.wishName)}}</td>
+      <td
+        [ngStyle]="{'font-size': 0.24*this.size + 'em', 'padding-top': 1.5*this.size + 'px', 'padding-bottom': 1.5*this.size + 'px'}"
+        class="colorMinusFive"
+        data-title="-5%"
+        style="white-space: nowrap">{{this.getBuyingYear(index, this.yearPlan.affordedWishesOverviewMinus5List)}}</td>
+      <td
+        [ngStyle]="{'font-size': 0.24*this.size + 'em', 'padding-top': 1.5*this.size + 'px', 'padding-bottom': 1.5*this.size + 'px'}"
+        class="colorMinusTwo"
+        data-title="-2.5%"
+        style="white-space: nowrap">{{this.getBuyingYear(index, this.yearPlan.affordedWishesOverviewMinus25List)}}</td>
+      <td
+        [ngStyle]="{'font-size': 0.24*this.size + 'em', 'padding-top': 1.5*this.size + 'px', 'padding-bottom': 1.5*this.size + 'px'}"
+        class="colorZero"
+        data-title="0%"
+        style="white-space: nowrap"> {{this.getBuyingYear(index, this.yearPlan.affordedWishesOverview0List)}}</td>
+      <td
+        [ngStyle]="{'font-size': 0.24*this.size + 'em', 'padding-top': 1.5*this.size + 'px', 'padding-bottom': 1.5*this.size + 'px'}"
+        class="colorPlusTwo"
+        data-title="2.5%"
+        style="white-space: nowrap">{{this.getBuyingYear(index, this.yearPlan.affordedWishesOverviewPlus25List)}}</td>
+      <td
+        [ngStyle]="{'font-size': 0.24*this.size + 'em', 'padding-top': 1.5*this.size + 'px', 'padding-bottom': 1.5*this.size + 'px'}"
+        class="colorPlusFive"
+        data-title="5%"
+        style="white-space: nowrap">{{this.getBuyingYear(index, this.yearPlan.affordedWishesOverviewPlus5List)}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>

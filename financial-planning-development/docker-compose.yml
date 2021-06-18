@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  financial-planning:
+    container_name: "financial-planning"
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql
+    environment:
+      DB_USERNAME: "root"
+      DB_PASSWORD: "root"
+      MOIS_DB_NAME: "mysql:3306/mois_financial_planning_docker?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true"
+
+  mysql:
+    extends:
+      file: ./docker/docker-compose.yml
+      service: mysql
+
+  chatbot:
+    extends:
+      file: ../chatbot/docker/docker-compose.yml
+      service: chatbot

@@ -1,0 +1,140 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2021-04-30T00:42:45.827Z",
+  "__export_source": "insomnia.desktop.app:v7.1.1",
+  "resources": [
+    {
+      "_id": "req_f1e0d39bd7ce4ab6ab42b812474ec969",
+      "authentication": {},
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"question\": \"Hi, how are you?\"\n}"
+      },
+      "created": 1585251215014,
+      "description": "",
+      "headers": [
+        {
+          "id": "pair_d37c22fc747a4d46ac9b014c9df2335f",
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "isPrivate": false,
+      "metaSortKey": -1585251215014,
+      "method": "POST",
+      "modified": 1588103018913,
+      "name": "question",
+      "parameters": [],
+      "parentId": "fld_30b4d085003f41539a63049c82d0a18c",
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingFollowRedirects": "global",
+      "settingRebuildPath": true,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "url": "{{ baseUrl  }}/chatbot/question",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_30b4d085003f41539a63049c82d0a18c",
+      "created": 1585251192451,
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1585251192451,
+      "modified": 1585251227753,
+      "name": "chatbot",
+      "parentId": "wrk_d3770e7f2a4b45959da231d67ed7b350",
+      "_type": "request_group"
+    },
+    {
+      "_id": "wrk_d3770e7f2a4b45959da231d67ed7b350",
+      "created": 1585251070189,
+      "description": "",
+      "modified": 1585251175571,
+      "name": "MOIS-chatbot",
+      "parentId": null,
+      "_type": "workspace"
+    },
+    {
+      "_id": "env_71c76927f1fcf08f97f2ef9fc7b7068717d9f256",
+      "color": null,
+      "created": 1585251070664,
+      "data": {},
+      "dataPropertyOrder": {},
+      "isPrivate": false,
+      "metaSortKey": 1585251070664,
+      "modified": 1585360267948,
+      "name": "Base Environment",
+      "parentId": "wrk_d3770e7f2a4b45959da231d67ed7b350",
+      "_type": "environment"
+    },
+    {
+      "_id": "jar_71c76927f1fcf08f97f2ef9fc7b7068717d9f256",
+      "cookies": [],
+      "created": 1585251070671,
+      "modified": 1588206925917,
+      "name": "Default Jar",
+      "parentId": "wrk_d3770e7f2a4b45959da231d67ed7b350",
+      "_type": "cookie_jar"
+    },
+    {
+      "_id": "env_7cf647cc4360460d9126c8932149259b",
+      "color": null,
+      "created": 1585251080040,
+      "data": {
+        "baseUrl": "http://localhost:8082"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "baseUrl"
+        ]
+      },
+      "isPrivate": false,
+      "metaSortKey": 1585251080040,
+      "modified": 1585360262735,
+      "name": "localhost",
+      "parentId": "env_71c76927f1fcf08f97f2ef9fc7b7068717d9f256",
+      "_type": "environment"
+    },
+    {
+      "_id": "env_ac0c61372bff419b89862b88b992562c",
+      "color": null,
+      "created": 1587236885470,
+      "data": {
+        "baseUrl": "http://192.168.99.100:8082"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "baseUrl"
+        ]
+      },
+      "isPrivate": false,
+      "metaSortKey": 1587236885470,
+      "modified": 1587259479530,
+      "name": "docker",
+      "parentId": "env_71c76927f1fcf08f97f2ef9fc7b7068717d9f256",
+      "_type": "environment"
+    },
+    {
+      "_id": "env_3df7403f1b384de9ae88beee68b04cea",
+      "color": null,
+      "created": 1587259682641,
+      "data": {
+        "baseUrl": "https://financial-planning-chatbot.herokuapp.com"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "baseUrl"
+        ]
+      },
+      "isPrivate": false,
+      "metaSortKey": 1587259682641,
+      "modified": 1587259693256,
+      "name": "production",
+      "parentId": "env_71c76927f1fcf08f97f2ef9fc7b7068717d9f256",
+      "_type": "environment"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+.git
+.idea
+/src
+.dockerignore
+.gitignore
+.gitlab-ci.yml
+docker-compose.yml
+financial-planning.iml
+LICENSE
+pom.xml
+README.md

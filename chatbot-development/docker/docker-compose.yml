@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  chatbot:
+    container_name: "chatbot"
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8082:8082"

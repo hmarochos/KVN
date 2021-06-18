@@ -1,0 +1,316 @@
+<div class="container-fluid">
+  <div class="p-5 card">
+    <h1 class="mb-4">Calculation of savings</h1>
+
+    <div *ngIf="this.responseMessage.status === -2" class="col-md-6">
+      <h3 class="text-danger">{{this.responseMessage.message}}</h3>
+    </div>
+
+    <div *ngIf="this.responseMessage.status !== -2" class="row">
+      <div class="col-md-6 pb-3">
+        <h4 class="mb-2">
+          Your monthly savings have been evaluated at:
+          <span [class.text-danger]="this.changeProfit()<0"
+                [class.text-success]="this.changeProfit()>0"
+                style="font-weight: bold">
+            {{this.clearProfit}}
+          </span>
+        </h4>
+        <h4 class="float-left">Mounth movement</h4>
+        <div class="pl-4 offset-11" hide-delay="0" tooltip="Show graph">
+          <i (click)="this.showHideChartByDays = !this.showHideChartByDays" *ngIf="!this.showHideChartByDays"
+             class="material-icons toggleIcon">keyboard_arrow_down</i>
+          <i (click)="this.showHideChartByDays = !this.showHideChartByDays" *ngIf="this.showHideChartByDays"
+             class="material-icons toggleIcon">keyboard_arrow_up</i>
+        </div>
+
+
+        <div *ngIf="this.showHideChartByDays">
+          <app-chart-month-bydays [monthDataOverview]="this.monthDataOverview"></app-chart-month-bydays>
+        </div>
+        <h4 class="mt-5">
+          Possibility to change monthly savings
+        </h4>
+        <div class="mt-3 has-success form-group">
+          <label class="bmd-label-floating" for="profitDiff">Change in monthly savings:</label>
+          <input [(ngModel)]="this.profitDiff"
+                 class="form-control"
+                 id="profitDiff"
+                 maxlength="11"
+                 name="profitDiff"
+                 required
+                 type="number">
+        </div>
+
+        <h4 class="mt-2">
+          What are your savings so far?
+        </h4>
+
+        <div [class.has-success]="this.savedMoney!=null" class="mt-3 form-group">
+          <label class="bmd-label-floating" for="savedMoney">Saved:</label>
+          <input [(ngModel)]="this.savedMoney"
+                 maxlength="11"
+                 minlength="1"
+                 class="form-control"
+                 id="savedMoney"
+                 name="wishItem"
+                 required
+                 type="number">
+
+          <button [class.btn-danger]="this.savedMoney==null"
+                  (click)="this.getPlan()"
+                  [disabled]="this.savedMoney==null"
+                  [class.btn-success]="this.savedMoney!=null"
+                  class="pull-right btn mt-2">
+            Set
+          </button>
+        </div>
+
+        <h4 *ngIf="this.savedMoney">Your savings are: <span class="mt-5 mb-5 text-success">{{this.savedMoney}}</span>
+        </h4>
+
+        <h4 class="mt-5 mb-3">
+          Planned purchases (does not need to be filled in):
+        </h4>
+
+        <form #itemform="ngForm" (submit)="this.addItem(itemform)">
+          <div
+            [class.has-danger]="wishItemNameControl.invalid && wishItemNameControl.dirty"
+            [class.has-success]="wishItemNameControl.valid && wishItemNameControl.dirty"
+            class="form-group">
+
+            <label class="bmd-label-floating" for="wishItemName">*Item name:</label>
+            <input #wishItemNameControl="ngModel"
+                   [(ngModel)]="this.wishItemName"
+                   [maxlength]="this._wishItemValidation.NAME_MAX_LENGTH"
+                   [minlength]="this._wishItemValidation.NAME_MIN_LENGTH"
+                   [pattern]="this._wishItemValidation.NAME_REG_EXP"
+                   class="form-control"
+                   id="wishItemName"
+                   name="wishItemName"
+                   required
+                   type="text">
+            <span *ngIf="wishItemNameControl.dirty"
+                  class="text-danger">{{this._wishItemValidation.itemNameValidation(this.wishItemName)}}</span>
+          </div>
+
+
+          <div [class.has-danger]="wishItemPriceControl.invalid && wishItemPriceControl.dirty"
+               [class.has-success]="wishItemPriceControl.valid && wishItemPriceControl.dirty"
+               class="form-group">
+
+            <label class="bmd-label-floating" for="wishItemPrice">*Purchase price:</label>
+            <input #wishItemPriceControl="ngModel"
+                   [(ngModel)]="this.wishItemPrice"
+                   [maxlength]="this._wishItemValidation.PRICE_MAX_LENGTH"
+                   [minlength]="this._wishItemValidation.PRICE_MIN_LENGTH"
+                   [pattern]="this._wishItemValidation.PRICE_REG_EXP"
+                   class="form-control"
+                   id="wishItemPrice"
+                   name="wishItemPrice"
+                   required
+                   type="text">
+            <span *ngIf="wishItemPriceControl.dirty"
+                  class="text-danger">{{this.wishItemPrice ? this._wishItemValidation.itemPriceValidation(this.wishItemPrice) : this._wishItemValidation.itemPriceValidation('')}}</span>
+          </div>
+
+          <div [class.has-danger]="wishItemDescriptionControl.invalid && wishItemDescriptionControl.dirty"
+               [class.has-success]="wishItemDescriptionControl.valid && wishItemDescriptionControl.dirty"
+               class="form-group">
+            <label class="bmd-label-floating" for="wishItemDescription">Item description:</label>
+            <textarea
+              #wishItemDescriptionControl="ngModel"
+              [(ngModel)]="this.wishItemDescription"
+              [maxlength]="this._wishItemValidation.DESCRIPTION_MAX_LENGTH"
+              [pattern]="this._wishItemValidation.DESCRIPTION_REG_EXP"
+              class="form-control"
+              id="wishItemDescription"
+              name="wishItemDescription"
+              rows="3"
+              type="text">
+            </textarea>
+          </div>
+          <span *ngIf="wishItemDescriptionControl.invalid && wishItemDescriptionControl.dirty"
+                class="text-danger">{{this._wishItemValidation.itemDescriptionValidation(this.wishItemDescription)}}</span>
+
+          <div *ngIf="this.wishItemValidationInfo.length>0" class="text-danger">
+            <h4>{{this.wishItemValidationInfo}}</h4>
+          </div>
+
+          <button [class.btn-danger]="itemform.invalid"
+                  [class.btn-success]="itemform.valid"
+                  [disabled]="itemform.invalid"
+                  class="pull-right btn mt-2">Add an item
+          </button>
+
+        </form>
+        <div *ngIf="this.responseMessage.message"
+             [class.text-danger]="this.responseMessage.status===-1"
+             [class.text-success]="this.responseMessage.status===1">
+          <h3>{{this.responseMessage.message}}</h3>
+        </div>
+      </div>
+
+      <div [hidden]="!(this.webContext !== 'Detail' && this.webContext !== 'Editace')"
+           class="wishListHolder card offset-md-1 col-md-5">
+        <h4 class="text-center font-weight-bold p-2 float-left">Your wish list <i (click)="this.deleteAllItems()"
+                                                                                  class="toggleIcon border-0 pull-right material-icons"
+                                                                                  hide-delay="0" tooltip="Delete all">delete_forever</i>
+        </h4>
+
+        <ol [dragulaModel]='this.filteredItems' [dragula]='"bag-one"' class="m-0">
+          <li *ngFor="let item of this.filteredItems" class="m-0"
+              id="{{item.id}}">
+
+            <div class="row">
+              <div class="col-8">{{item.name}}</div>
+              <div class="text-success col-4 font-weight-bold">{{item.price}} USD</div>
+            </div>
+
+            <div class="row mt-1 text-center">
+              <div class="col-4"><i (click)="this.deleteItem(item.id)" class="text-danger iconHover material-icons"
+                                    hide-delay="2" tooltip="Odstranit">clear</i>
+              </div>
+              <div class="col-4"><i (click)="this.showDetail(item)" class="iconHover text-info material-icons"
+                                    hide-delay="0"
+                                    tooltip="Detail">info</i>
+              </div>
+              <div class="col-4"><i (click)="this.showEdit(item)" class="iconHover text-success material-icons"
+                                    hide-delay="0"
+                                    tooltip="Editovat">create</i>
+              </div>
+            </div>
+
+          </li>
+        </ol>
+
+        <span class="mt-4 text-center font-weight-bold">Drag to arrange folders</span>
+
+
+        <div class="mt-3 font-weight-bold text-center col12" style="font-size: 1.5em; font-weight: 800">
+          <span class="font-weight-bold p-2"><i (click)="this.setFirstPage()" class="iconHover material-icons">first_page</i> </span>
+          <span class="font-weight-bold p-2"><i (click)="this.setPrevPage()"
+                                                class="iconHover material-icons">arrow_back</i></span>
+          <span class="font-weight-bold p-0"><i (click)="this.setNextPage()" class="iconHover material-icons">arrow_forward</i></span>
+          <span class="font-weight-bold p-2"><i (click)="this.setLastPage()"
+                                                class="iconHover material-icons">last_page</i> </span>
+        </div>
+
+        <div class="text-center">Page: {{this.currentPage}} to {{this.lastPage}}</div>
+
+      </div>
+
+      <div [hidden]="!(this.webContext === 'Detail' || this.webContext === 'Editace')"
+           class="wishListHolder card offset-md-1 col-md-5 p-3">
+        <h4 class="font-weight-bold">{{this.webContext}} <i (click)="this.webContext = ''"
+                                                            class="toggleIcon border-0 material-icons pull-right"
+                                                            hide-delay="0"
+                                                            tooltip="Zpět">arrow_back</i>
+        </h4>
+        <app-show-edit-item
+          (getPlan)="this.getPlan()"
+          (getWishList)="this.getWishList()"
+          (returnToList)="this.returnToList()"
+          (serverResponseError)="this.serverResponseError()"
+          (serverResponseErrorMessage)="this.serverResponseErrorMessage($event)"
+          (setLoading)="this.setLoading()"
+          (tokenIsInvalid)="this.tokenIsInvalid()"
+          [oldItem]="this.selectedItemToEdit"
+          [viewType]="this.webContext">
+        </app-show-edit-item>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div *ngIf="this.responseMessage.status !== -2 && this.monthPlan.length !== 0" class="col-12 text-white text-center">
+    <div class="offset-md-2 row">
+      <div (click)="this.showHideChart('monthLinear')"
+           [class.bg-secondary]="this.displayChart.monthLinear"
+           [class.bg-success]="!this.displayChart.monthLinear"
+           class="w-100 col-md-2 mb-4 chartToggler">
+        <div>Monthly linear</div>
+        <i class="material-icons">{{!this.displayChart.monthLinear ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</i>
+      </div>
+      <div (click)="this.showHideChart('monthBox')"
+           [class.bg-secondary]="this.displayChart.monthBox"
+           [class.bg-success]="!this.displayChart.monthBox"
+           class="w-100 col-md-2 mb-4 chartToggler bg-success">
+        <div>Monthly columnar</div>
+        <i class="material-icons">{{!this.displayChart.monthBox ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</i>
+      </div>
+      <div (click)="this.showHideChart('yearLinear')"
+           [class.bg-charts]="!this.displayChart.yearLinear"
+           [class.bg-secondary]="this.displayChart.yearLinear"
+           class="w-100 col-md-2 mb-4 chartToggler">
+        <div>Annual linear</div>
+        <i class="material-icons">{{!this.displayChart.yearLinear ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</i>
+      </div>
+      <div (click)="this.showHideChart('yearBox')"
+           [class.bg-charts]="!this.displayChart.yearBox"
+           [class.bg-secondary]="this.displayChart.yearBox"
+           class="w-100 col-md-2 mb-4 chartToggler">
+        <div>Annual column</div>
+        <i class="material-icons">{{!this.displayChart.yearBox ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</i>
+      </div>
+    </div>
+  </div>
+
+  <ol *ngIf="this.responseMessage.status !== -2 && this.monthPlan.length !== 0" [dragula]='"bag-two"'
+      class="m-0 p-0 row bg-transparent border-0">
+
+    <li *ngIf="this.displayChart.monthLinear"
+        class="p-1 m-0 bg-transparent border-0 col-md-{{this.linearMonthChartSize}} ">
+      <app-chart-month-linear
+        [numberOfItems]="this.items.length"
+        (hideChart)="this.showHideChart($event)"
+        [monthPlan]="this.monthPlan"
+        [savedMoney]="this.defaultSavedMoney"
+        (funcReturnChartSize)='this.getLinearMonthChangeSize($event)'
+        [linearMonthChartSize]="this.linearMonthChartSize">
+      </app-chart-month-linear>
+    </li>
+
+    <li *ngIf="this.displayChart.monthBox" class="p-1 m-0 bg-transparent border-0 col-md-{{this.boxMonthChartSize}}">
+      <app-chart-month-box
+        [numberOfItems]="this.items.length"
+        (hideChart)="this.showHideChart($event)"
+        [monthPlan]="this.monthPlan"
+        [savedMoney]="this.defaultSavedMoney"
+        (funcReturnChartSize)='this.getBoxMonthChangeSize($event)'
+        [boxMonthChartSize]="this.boxMonthChartSize">
+      </app-chart-month-box>
+    </li>
+
+    <li *ngIf="this.displayChart.yearLinear"
+        class="p-1 m-0 bg-transparent border-0 col-md-{{this.linearYearChartSize}}">
+      <app-chart-year-linear
+        [numberOfItems]="this.items.length"
+        (hideChart)="this.showHideChart($event)"
+        [savedMoney]="this.defaultSavedMoney"
+        [yearPlan]="this.yearPlan"
+        (funcReturnChartSize)='this.getLinearYearChangeSize($event)'
+        [linearYearChartSize]="this.linearYearChartSize">
+      </app-chart-year-linear>
+    </li>
+
+    <li *ngIf="this.displayChart.yearBox" class="p-1 m-0 bg-transparent border-0 col-md-{{this.boxYearChartSize}}">
+      <app-chart-year-box
+        [numberOfItems]="this.items.length"
+        (hideChart)="this.showHideChart($event)"
+        [savedMoney]="this.defaultSavedMoney"
+        [yearPlan]="this.yearPlan"
+        (funcReturnChartSize)='this.getBoxYearChangeSize($event)'
+        [boxYearChartSize]="this.boxYearChartSize">
+      </app-chart-year-box>
+    </li>
+  </ol>
+
+
+</div>
+
+<div *ngIf="this.loading" class="loader-box">
+  <app-spinner-module></app-spinner-module>
+</div>
+

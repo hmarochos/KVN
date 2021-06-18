@@ -1,0 +1,413 @@
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+
+      <div class="ml-md-3 col-md-10">
+        <div class="card">
+
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Registration</h4>
+            <p class="card-category">Take advantage of free registrations</p>
+          </div>
+
+          <div class="ml-md-5 card-body">
+
+            <form #userForm="ngForm" (submit)="this.getUserForm(userForm)">
+
+              <h2>Basic data:</h2>
+
+              <div class="offset-xl-2 col-xl-8">
+
+                <div class="mt-2">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                          <i class="material-icons">people</i>
+                      </span>
+                    </div>
+                    <div [class.has-danger]="firstNameControl.invalid && firstNameControl.dirty"
+                         [class.has-success]="firstNameControl.valid"
+                         class="form-group col-md-10">
+                      <label class="bmd-label-floating" for="firstName">Name*:</label>
+                      <input #firstNameControl="ngModel"
+                             [(ngModel)]="this.firstName" [maxlength]="this.firstNameMaxLength"
+                             [minlength]="this.firstNameMinLength"
+                             [pattern]="this.regexFirstName"
+                             class="form-control"
+                             id="firstName"
+                             name="firstName"
+                             required
+                             type="text">
+                      <span *ngIf="firstNameControl.valid" class="form-control-feedback">
+                     <i class="material-icons">done</i>
+                  </span>
+                      <span *ngIf="firstNameControl.invalid && firstNameControl.dirty"
+                            class="material-icons form-control-feedback">clear</span>
+                      <span *ngIf="firstNameControl.invalid && firstNameControl.dirty" class="help-block">
+                     Please enter a valid name starting with a capital letter.
+                  </span>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="mt-2">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                          <i class="material-icons">person</i>
+                      </span>
+                    </div>
+                    <div [class.has-danger]="lastNameControl.invalid && lastNameControl.dirty"
+                         [class.has-success]="lastNameControl.valid"
+                         class="form-group col-md-10">
+                      <label class="bmd-label-floating" for="lastName">Surname*:</label>
+                      <input #lastNameControl="ngModel"
+                             [(ngModel)]="this.lastName" [maxlength]="this.lastNameMaxLength"
+                             [minlength]="this.lastNameMinLength"
+                             [pattern]="this.regexLastName"
+                             class="form-control"
+                             id="lastName"
+                             name="lastName"
+                             required
+                             type="text">
+                      <span *ngIf="lastNameControl.valid" class="form-control-feedback">
+                          <i class="material-icons">done</i>
+                      </span>
+                      <span *ngIf="lastNameControl.invalid && lastNameControl.dirty"
+                            class="material-icons form-control-feedback">clear</span>
+                      <span *ngIf="lastNameControl.invalid && lastNameControl.dirty" class="help-block">
+                          Please enter a valid last name starting with a capital letter.
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="mt-2">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                          <i class="material-icons">email</i>
+                      </span>
+                    </div>
+                    <div [class.has-danger]="emailControl.invalid && emailControl.dirty"
+                         [class.has-success]="emailControl.valid"
+                         class="form-group col-md-10">
+                      <label class="bmd-label-floating" for="email">Email*:</label>
+                      <input #emailControl="ngModel"
+                             [(ngModel)]="this.email" [maxlength]="this.emailMaxLength"
+                             [minlength]="this.emailMinLength"
+                             [pattern]="this.regexEmail"
+                             class="form-control"
+                             id="email"
+                             name="email"
+                             required
+                             autocomplete="email"
+                             type="email">
+                      <span *ngIf="emailControl.valid" class="form-control-feedback">
+                        <i class="material-icons">done</i>
+                      </span>
+                      <span *ngIf="emailControl.invalid && emailControl.dirty"
+                            class="material-icons form-control-feedback">clear</span>
+                      <span *ngIf="emailControl.invalid && emailControl.dirty" class="help-block">
+                          Please enter a valid email.
+                       </span>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="mt-2">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                          <i class="material-icons">lock</i>
+                      </span>
+                    </div>
+                    <div [class.has-danger]="passwordControl.invalid && passwordControl.dirty"
+                         [class.has-success]="passwordControl.valid"
+                         class="form-group col-md-10">
+                      <label class="bmd-label-floating" for="password">Password*:</label>
+                      <input #passwordControl="ngModel"
+                             [(ngModel)]="this.password" [maxlength]="this.passwordMaxLength"
+                             [minlength]="this.passwordMinLength"
+                             [pattern]="this.regexPass"
+                             class="form-control"
+                             id="password"
+                             name="password"
+                             required
+                             autocomplete="new-password"
+                             type="password">
+                      <span *ngIf="passwordControl.valid" class="form-control-feedback">
+                         <i class="material-icons">done</i>
+                      </span>
+                      <span *ngIf="passwordControl.invalid && passwordControl.dirty"
+                            class="material-icons form-control-feedback">clear</span>
+                      <span *ngIf="passwordControl.invalid && passwordControl.dirty" class="help-block">
+                          The password must contain at least 1 number, lowercase letter, uppercase letter, and special character.
+                        <br/>
+                      </span>
+                      <span
+                        *ngIf="pass1Control.value!==passwordControl.value && pass1Control.valid && pass1Control.dirty"
+                        class="help-block">
+                          Passwords do not match.
+                      </span>
+                      <span
+                        *ngIf="pass1Control.value===passwordControl.value && pass1Control.valid && pass1Control.dirty"
+                        class="help-block text-success">
+                          Passwords match.
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="mt-2">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                          <i class="material-icons">lock</i>
+                      </span>
+                    </div>
+                    <div [class.has-danger]="pass1Control.invalid && pass1Control.dirty"
+                         [class.has-success]="pass1Control.valid"
+                         class="form-group col-md-10">
+                      <label class="bmd-label-floating" for="pass1">Password again*:</label>
+                      <input #pass1Control="ngModel"
+                             [(ngModel)]="this.pass1" [maxlength]="this.passwordMaxLength"
+                             [minlength]="this.passwordMinLength"
+                             class="form-control"
+                             id="pass1"
+                             name="pass1"
+                             required
+                             autocomplete="new-password"
+                             type="password">
+                      <span *ngIf="pass1Control.valid" class="form-control-feedback">
+                          <i class="material-icons">done</i>
+                      </span>
+                      <span *ngIf="pass1Control.invalid && pass1Control.dirty"
+                            class="material-icons form-control-feedback">clear</span>
+                      <span
+                        *ngIf="pass1Control.value!==passwordControl.value && pass1Control.valid && pass1Control.dirty"
+                        class="help-block">
+                          Passwords do not match.
+                      </span>
+                      <span
+                        *ngIf="pass1Control.value===passwordControl.value && pass1Control.valid && pass1Control.dirty"
+                        class="help-block text-success">
+                          Passwords match.
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="mt-2">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                          <i class="material-icons">phone</i>
+                      </span>
+                    </div>
+                    <div [class.has-danger]="telephoneNumberControl.invalid && telephoneNumberControl.dirty"
+                         [class.has-success]="telephoneNumberControl.valid  && telephoneNumberControl.dirty"
+                         class="form-group col-md-10">
+                      <label class="bmd-label-floating" for="telephoneNumber">Phone:</label>
+                      <input #telephoneNumberControl="ngModel"
+                             [(ngModel)]="this.telephoneNumber" [maxlength]="this.telMaxLength"
+                             [minlength]="this.telMinLength"
+                             [pattern]="this.regexTel"
+                             class="form-control"
+                             id="telephoneNumber"
+                             name="telephoneNumber"
+                             type="text">
+                      <span *ngIf="telephoneNumberControl.valid && telephoneNumberControl.dirty"
+                            class="form-control-feedback">
+                         <i class="material-icons">done</i>
+                      </span>
+                      <span *ngIf="telephoneNumberControl.invalid && telephoneNumberControl.dirty"
+                            class="material-icons form-control-feedback">clear</span>
+                      <span *ngIf="telephoneNumberControl.invalid && telephoneNumberControl.dirty" class="help-block">
+                        Please enter a valid phone number.
+                     </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <h2>Address:</h2>
+
+
+              <div class="offset-xl-2 col-xl-8">
+
+                <div class="mt-2">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                          <i class="material-icons">home</i>
+                      </span>
+                    </div>
+                    <div [class.has-danger]="streetControl.invalid && streetControl.dirty"
+                         [class.has-success]="streetControl.valid"
+                         class="form-group col-md-10">
+                      <label class="bmd-label-floating" for="street">Street*:</label>
+                      <input #streetControl="ngModel"
+                             [(ngModel)]="this.street" [maxlength]="this.streetMaxLength"
+                             [minlength]="this.streetMinLength"
+                             [pattern]="this.regexStreet"
+                             class="form-control"
+                             id="street"
+                             name="street"
+                             required
+                             type="text">
+                      <span *ngIf="streetControl.valid" class="form-control-feedback">
+                          <i class="material-icons">done</i>
+                      </span>
+                      <span *ngIf="streetControl.invalid && streetControl.dirty"
+                            class="material-icons form-control-feedback">clear</span>
+                      <span *ngIf="streetControl.invalid && streetControl.dirty" class="help-block">
+                        Enter a valid street name along with the house number.
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="mt-2">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                          <i class="material-icons">home</i>
+                      </span>
+                    </div>
+                    <div [class.has-danger]="cityControl.invalid && cityControl.dirty"
+                         [class.has-success]="cityControl.valid"
+                         class="form-group col-md-10">
+                      <label class="bmd-label-floating" for="city">City*:</label>
+                      <input #cityControl="ngModel"
+                             [(ngModel)]="this.city" [maxlength]="this.cityMaxLength"
+                             [minlength]="this.cityMinLength"
+                             [pattern]="this.regexCity"
+                             class="form-control"
+                             id="city"
+                             name="city"
+                             required
+                             type="text">
+                      <span *ngIf="cityControl.valid" class="form-control-feedback">
+                         <i class="material-icons">done</i>
+                      </span>
+                      <span *ngIf="cityControl.invalid && cityControl.dirty"
+                            class="material-icons form-control-feedback">clear</span>
+                      <span *ngIf="cityControl.invalid && cityControl.dirty" class="help-block">
+                        Please enter a valid city.
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="mt-2">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                          <i class="material-icons">home</i>
+                      </span>
+                    </div>
+                    <div [class.has-danger]="pscControl.invalid && pscControl.dirty"
+                         [class.has-success]="pscControl.valid"
+                         class="form-group col-md-10">
+                      <label class="bmd-label-floating" for="psc">ZIP code*:</label>
+                      <input #pscControl="ngModel"
+                             [(ngModel)]="this.psc" [maxlength]="this.pscMaxLength"
+                             [minlength]="this.pscMinLength"
+                             [pattern]="this.regexPsc"
+                             class="form-control"
+                             id="psc"
+                             name="psc"
+                             required
+                             type="text">
+                      <span *ngIf="pscControl.valid" class="form-control-feedback">
+                        <i class="material-icons">done</i>
+                      </span>
+                      <span *ngIf="pscControl.invalid && pscControl.dirty" class="material-icons form-control-feedback">clear</span>
+                      <span *ngIf="pscControl.invalid && pscControl.dirty" class="help-block">
+                         Please enter a valid zip code.
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <h2>Account number:</h2>
+
+
+              <div class="offset-xl-2 col-xl-8">
+
+                <div class="mt-2">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                          <i class="material-icons">credit_card</i>
+                      </span>
+                    </div>
+                    <div [class.has-danger]="accountIdControl.invalid && accountIdControl.dirty"
+                         [class.has-success]="accountIdControl.valid && accountIdControl.dirty"
+                         class="form-group col-md-10">
+                      <label class="bmd-label-floating" for="accountId">Account number:</label>
+                      <input #accountIdControl="ngModel"
+                             [(ngModel)]="this.accountId" [maxlength]="this.accountIdMaxLength"
+                             [minlength]="this.accountIdMinLength"
+                             [pattern]="this.regexAccountId"
+                             class="form-control"
+                             id="accountId"
+                             name="accountId"
+                             type="text">
+                      <span *ngIf="accountIdControl.valid" class="form-control-feedback">
+                         <i class="material-icons">done</i>
+                      </span>
+                      <span *ngIf="accountIdControl.invalid && accountIdControl.dirty"
+                            class="material-icons form-control-feedback">clear</span>
+                      <span *ngIf="accountIdControl.invalid && accountIdControl.dirty" class="help-block">
+                        Enter a valid account number.
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-center text-danger">
+                <h4>{{this.registrationInfo}}</h4>
+              </div>
+
+              <div [class.text-danger]="this.responseMessage.status===-1"
+                   [class.text-success]="this.responseMessage.status===1" class="text-center">
+                <h4>{{this.responseMessage.message}}</h4>
+              </div>
+
+
+              <div class="text-center offset-xl-3 col-xl-6 ">
+                <button [class.btn-danger]="userForm.invalid"
+                        [class.btn-success]="passwordControl.value===pass1Control.value &&userForm.valid"
+                        class="w-100 mt-5 btn"
+                        type="submit">Register
+                </button>
+              </div>
+
+            </form>
+            <br/>
+
+            <span [class.text-danger]="!this.statusState" [class.text-success]="this.statusState"
+                  class="text-center">{{this.statusText}}</span>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="this.loading" class="loader-box">
+  <app-spinner-module></app-spinner-module>
+</div>

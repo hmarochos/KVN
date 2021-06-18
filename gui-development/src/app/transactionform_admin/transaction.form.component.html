@@ -1,0 +1,233 @@
+<div class="content">
+  <div class="container-fluid">
+
+    <div class="ml-md-3 col-md-10">
+      <div class="card">
+
+        <div class="card-header card-header-danger">
+          <h4 class="card-title">API transactions</h4>
+          <p class="card-category">For transaction entry only (this is not part of the project)</p>
+        </div>
+
+        <div class="ml-md-5 card-body">
+
+          <h3 class="mb-3">Form for simply entering test data</h3>
+
+          <form #transactionForm="ngForm">
+            <div class="input-group col-md-8 mt-2 mb-5">
+              <div [class.has-danger]="accountIdControl.invalid && accountIdControl.dirty"
+                   [class.has-success]="accountIdControl.valid"
+                   class="w-100">
+                <label class="bmd-label-floating" for="accountId">Account number*:</label>
+                <input
+                  #accountIdControl="ngModel"
+                  [(ngModel)]="this.accountId"
+                  [maxLength]="this._transactionValidation.ACCOUNTID_MAX_LENGTH"
+                  [minLength]="this._transactionValidation.ACCOUNTID_MIN_LENGTH"
+                  [pattern]="this._transactionValidation.ACCOUNTID_REGEX"
+                  class="form-control"
+                  id="accountId"
+                  name="accountId"
+                  required
+                  type="text">
+              </div>
+            </div>
+
+            <div class="input-group col-md-8 mt-2 mb-5">
+              <div [class.has-danger]="amountControl.invalid && amountControl.dirty"
+                   [class.has-success]="amountControl.valid"
+                   class="w-100">
+                <label class="bmd-label-floating" for="amount">Amount*:</label>
+                <input
+                  #amountControl="ngModel"
+                  [(ngModel)]="this.amount"
+                  [pattern]="this._transactionValidation.NUMBER_REG_EX"
+                  class="form-control"
+                  id="amount"
+                  maxlength="12"
+                  minlength="1"
+                  name="amount"
+                  required
+                  type="text">
+              </div>
+            </div>
+
+            <div class="col-md-8 mb-5">
+              <div [class.has-danger]="currencyControl.invalid && currencyControl.dirty"
+                   [class.has-success]="currencyControl.valid"
+                   class="w-100">
+                <label class="bmd-label-floating p-0" for="currency">Currency*:</label>
+                <select #currencyControl="ngModel" [(ngModel)]="this.currency" class="p-0 form-control" id="currency"
+                        name="currency">
+                  <option selected value="CZK">USD</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="input-group col-md-8 mb-5">
+              <div [class.has-danger]="bankCodeControl.invalid && bankCodeControl.dirty"
+                   [class.has-success]="bankCodeControl.valid"
+                   class="w-100">
+                <label class="bmd-label-floating" for="bankCode">Bank code*:</label>
+                <input
+                  #bankCodeControl="ngModel"
+                  [(ngModel)]="this.bankCode"
+                  [pattern]="this._transactionValidation.NUMBER_REG_EX"
+                  class="form-control"
+                  id="bankCode"
+                  maxlength="12"
+                  minlength="1"
+                  name="bankCode"
+                  required
+                  type="text">
+              </div>
+            </div>
+
+            <div class="input-group col-md-8 mb-5">
+              <div [class.has-danger]="partyDescriptionControl.invalid && partyDescriptionControl.dirty"
+                   [class.has-success]="partyDescriptionControl.valid"
+                   class="w-100">
+                <label class="bmd-label-floating" for="partyDescription">Payment description * (message for sender):</label>
+                <input
+                  #partyDescriptionControl="ngModel"
+                  [(ngModel)]="this.partyDescription"
+                  [maxlength]="this._transactionValidation.DESCRIPTION_MAX_LENGTH"
+                  class="form-control"
+                  id="partyDescription"
+                  minlength="1"
+                  name="partyDescription"
+                  required
+                  type="text">
+              </div>
+            </div>
+
+            <div class="col-md-8 mb-5">
+              <div [class.has-danger]="directionControl.invalid && directionControl.dirty"
+                   [class.has-success]="directionControl.valid"
+                   class="w-100">
+                <label class="bmd-label-floating" for="direction">Type of payment*:</label>
+                <select #directionControl="ngModel" [(ngModel)]="this.direction" class="form-control" id="direction"
+                        name="direction">
+                  <option selected value="INCOMING">Incoming</option>
+                  <option value="OUTGOING">Outgoing</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-8 mb-5">
+              <div [class.has-danger]="transactionTypeControl.invalid && transactionTypeControl.dirty"
+                   [class.has-success]="transactionTypeControl.valid"
+                   class="w-100">
+                <label class="bmd-label-floating" for="transactionType">Transaction type*:</label>
+                <select #transactionTypeControl="ngModel" [(ngModel)]="this.transactionType" class="form-control"
+                        data-style="btn btn-link"
+                        id="transactionType" name="transactionType">
+                  <option selected value="PAYMENT_HOME">Home</option>
+                  <option value="PAYMENT_ABROAD">Abroad</option>
+                  <option value="SAVING">Saving</option>
+                  <option value="PAYMENT_PERSONAL">Payment personal</option>
+                  <option value="PAYMENT_ACCOUNT">Payment account</option>
+                  <option value="STANDING_ORDER">Standning order</option>
+                  <option value="DIRECT_DEBIT">Direct debit</option>
+                  <option value="DIRECT_DEBIT_SIPO">Direct debit SIPO</option>
+                  <option value="CARD">Card</option>
+                  <option value="CASH">Cash</option>
+                  <option value="FEE">FEE</option>
+                  <option value="TAX">Tax</option>
+                  <option value="INTEREST">Interest</option>
+                  <option value="INSURANCE">Insurance</option>
+                  <option value="LOAN">Loan</option>
+                  <option value="MORTGAGE">Mortage</option>
+                  <option value="SAZKA">Bet</option>
+                  <option value="OTHER">Other</option>
+                  <option value="BLOCKING">Blocking</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+
+              <div class="row">
+                <div class="col-md-3">
+                  <div [class.has-danger]="constantSymbolControl.invalid && constantSymbolControl.dirty"
+                       [class.has-success]="constantSymbolControl.valid"
+                       class="w-100">
+                    <label class="bmd-label-floating" for="constantSymbol">Constant
+                      symbol:</label>
+                    <input
+                      #constantSymbolControl="ngModel"
+                      [(ngModel)]="this.constantSymbol"
+                      [pattern]="this._transactionValidation.NUMBER_REG_EX"
+                      class="form-control"
+                      id="constantSymbol"
+                      maxlength="10"
+                      name="constantSymbol"
+                      type="text">
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div [class.has-danger]="variableSymbolControl.invalid && variableSymbolControl.dirty"
+                       [class.has-success]="variableSymbolControl.valid"
+                       class="w-100">
+                    <label class="bmd-label-floating" for="variableSymbol">Variable symbol:</label>
+                    <input
+                      #variableSymbolControl="ngModel"
+                      [(ngModel)]="this.variableSymbol"
+                      [pattern]="this._transactionValidation.NUMBER_REG_EX"
+                      class="form-control"
+                      id="variableSymbol"
+                      maxlength="10"
+                      name="variableSymbol"
+                      type="text">
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div [class.has-danger]="specificSymbolControl.invalid && specificSymbolControl.dirty"
+                       [class.has-success]="specificSymbolControl.valid"
+                       class="w-100">
+                    <label class="bmd-label-floating" for="specificSymbol">Specific symbol:</label>
+                    <input
+                      #specificSymbolControl="ngModel"
+                      [(ngModel)]="this.specificSymbol"
+                      [pattern]="this._transactionValidation.NUMBER_REG_EX"
+                      class="form-control"
+                      id="specificSymbol"
+                      maxlength="10"
+                      name="specificSymbol"
+                      type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-8 mb-5">
+              <label class="bmd-label-floating" for="paymentDate">Transaction date:</label>
+              <input (dateTimePickerChange)="this.setMoment($event)" [(ngModel)]="this.paymentDate"
+                     [dateTimePicker]="this.paymentDate" [value]="this.paymentDate " class="form-control"
+                     id="paymentDate" name="paymentDate" readonly/>
+            </div>
+
+            <button (click)="this.addTransaction(transactionForm)" class="pull-right btn btn-success">Send</button>
+
+          </form>
+
+
+          <div *ngFor="let item of this.validationInfo" class="text-danger">
+            {{item}}
+          </div>
+
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="this.loading" class="loader-box">
+  <app-spinner-module></app-spinner-module>
+</div>
+

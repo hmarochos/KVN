@@ -1,0 +1,11 @@
+ul {
+  border-top: 0.4px solid gray;
+  border-left: 0.4px solid gray;
+  border-radius: 12px;
+}
+
+.nav-link {
+  border-radius: 12px;
+}
+
+

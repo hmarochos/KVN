@@ -1,0 +1,75 @@
+<form #itemformEdit="ngForm" (submit)="this.editItem(itemformEdit)">
+  <div
+    [class.has-danger]="wishItemNameEditControl.invalid"
+    [class.has-success]="wishItemNameEditControl.valid"
+    class="form-group">
+
+    <label for="wishItemNameEdit">{{this.viewType === 'Detail' ? '' : '*'}}Item name:</label>
+    <input #wishItemNameEditControl="ngModel"
+           [(ngModel)]="this.newItem.name"
+           [disabled]="this.viewType==='Detail'"
+           [maxlength]="this._wishItemValidation.NAME_MAX_LENGTH"
+           [minlength]="this._wishItemValidation.NAME_MIN_LENGTH"
+           [pattern]="this._wishItemValidation.NAME_REG_EXP"
+           class="form-control"
+           id="wishItemNameEdit"
+           name="wishItemNameEdit"
+           required
+           type="text">
+    <span *ngIf="wishItemNameEditControl.dirty"
+          class="text-danger">{{this._wishItemValidation.itemNameValidation(this.newItem.name)}}</span>
+  </div>
+
+
+  <div [class.has-danger]="wishItemPriceEditControl.invalid"
+       [class.has-success]="wishItemPriceEditControl.valid"
+       class="form-group">
+
+    <label for="wishItemPriceEdit">{{this.viewType === 'Detail' ? '' : '*'}}Purchase price:</label>
+    <input #wishItemPriceEditControl="ngModel"
+           [(ngModel)]="this.newItem.price"
+           [disabled]="this.viewType==='Detail'"
+           [maxlength]="this._wishItemValidation.PRICE_MAX_LENGTH"
+           [minlength]="this._wishItemValidation.PRICE_MIN_LENGTH"
+           [pattern]="this._wishItemValidation.PRICE_REG_EXP"
+           class="form-control"
+           id="wishItemPriceEdit"
+           name="wishItemPriceEdit"
+           required
+           type="text">
+    <span *ngIf="wishItemPriceEditControl.dirty"
+          class="text-danger">{{this.newItem.price ? this._wishItemValidation.itemPriceValidation(this.newItem.price) : this._wishItemValidation.itemPriceValidation('')}}</span>
+  </div>
+
+  <div [class.has-danger]="wishItemDescriptionEditControl.invalid"
+       [class.has-success]="wishItemDescriptionEditControl.valid"
+       class="form-group">
+    <label for="wishItemDescriptionEdit">Item description:</label>
+    <textarea
+      #wishItemDescriptionEditControl="ngModel"
+      [(ngModel)]="this.newItem.description"
+      [disabled]="this.viewType==='Detail'"
+      [maxlength]="this._wishItemValidation.DESCRIPTION_MAX_LENGTH"
+      [pattern]="this._wishItemValidation.DESCRIPTION_REG_EXP"
+      class="form-control"
+      id="wishItemDescriptionEdit"
+      name="wishItemDescriptionEdit"
+      rows="3"
+      type="text">
+            </textarea>
+  </div>
+  <span *ngIf="wishItemDescriptionEditControl.invalid && wishItemDescriptionEditControl.dirty"
+        class="text-danger">{{this._wishItemValidation.itemDescriptionValidation(this.newItem.description)}}</span>
+
+  <div *ngIf="this.wishItemValidationInfo" class="text-danger">
+    <h4>{{this.wishItemValidationInfo}}</h4>
+  </div>
+
+  <button *ngIf="this.viewType==='Editace'"
+          [class.btn-danger]="itemformEdit.invalid"
+          [class.btn-success]="itemformEdit.valid"
+          [disabled]="itemformEdit.invalid"
+          class="pull-right btn mt-2">Edit the item
+  </button>
+
+</form>

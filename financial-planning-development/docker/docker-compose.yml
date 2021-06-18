@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+  financial-planning:
+    container_name: "financial-planning"
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql
+    environment:
+      DB_USERNAME: "root"
+      DB_PASSWORD: "root"
+      MOIS_DB_NAME: "mysql:3306/mois_financial_planning_docker?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true"
+
+  mysql:
+    image: mysql:8.0.19
+    container_name: "mysql"
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: mois_financial_planning_docker
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: root

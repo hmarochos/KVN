@@ -1,0 +1,216 @@
+<div class="content">
+  <div class="container-fluid">
+    <div class="card col-md-12">
+
+      <div class="bg-danger card-header card-header-danger">
+        <h4 class="text-white card-title">Profile</h4>
+      </div>
+
+
+      <div *ngIf="this._cookieService.get('accessToken') && this.responseMessage" class="p-5 text-danger">
+        <h4>{{this.responseMessage}}</h4></div>
+
+      <div *ngIf="this.userProfile" class="card-body">
+        <div class="row">
+
+          <div class="card col-md-7">
+            <div class="card-header card-header-danger">
+              <h4 class="card-title">Identification data</h4>
+            </div>
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-5">
+                  <img alt="profilImg" class="mt-5 w-100" src="/src/assets/img/faces/profilePhoto.svg">
+                </div>
+                <div class="col-md-6">
+
+                  <div class="pt-2 col-xs-6">
+                    <label for="firstName">Name:</label>
+                    <input [(ngModel)]="this.userProfile.firstName"
+                           [disabled]="!this.editProfile"
+                           [value]="this.userProfile.firstName"
+                           [maxlength]="this._userValidationService.FIRST_NAME_MAX_LENGTH"
+                           [minlength]="this._userValidationService.FIRST_NAME_MIN_LENGTH"
+                           class="form-control noAutoFill"
+                           id="firstName"
+                           autocomplete="uc-firstName"
+                           name="firstName"
+                           type="text">
+                  </div>
+
+                  <div class="pt-2 col-xs-6">
+                    <label for="lastName">Surname:</label>
+                    <input [(ngModel)]="this.userProfile.lastName"
+                           [disabled]="!this.editProfile"
+                           [value]="this.userProfile.lastName"
+                           [maxlength]="this._userValidationService.LAST_NAME_MAX_LENGTH"
+                           [minlength]="this._userValidationService.LAST_NAME_MIN_LENGTH"
+                           autocomplete="uc-lastName"
+                           class="form-control noAutoFill" id="lastName"
+                           name="lastName"
+                           type="text">
+                  </div>
+
+                  <div class="pt-2 col-xs-6">
+                    <label for="telephoneNumber">Phone:</label>
+                    <input [(ngModel)]="this.userProfile.telephoneNumber"
+                           [disabled]="!this.editProfile"
+                           [value]="this.userProfile.telephoneNumber"
+                           [maxlength]="this._userValidationService.TELEPHONE_MAX_LENGTH"
+                           [minlength]="this._userValidationService.TELEPHONE_MIN_LENGTH"
+                           autocomplete="uc-tel"
+                           class="form-control noAutoFill"
+                           id="telephoneNumber"
+                           name="telephoneNumber"
+                           type="text">
+                  </div>
+
+                  <div class="pt-2 col-xs-6">
+                    <label for="email">Email:</label>
+                    <input [(ngModel)]="this.userProfile.email"
+                           [disabled]="true"
+                           [value]="this.userProfile.email"
+                           autocomplete="uc-email"
+                           class="form-control noAutoFill"
+                           id="email"
+                           name="email"
+                           type="email">
+                  </div>
+
+                  <div class="pt-2 col-xs-6">
+                    <label for="accountId">Account number:</label>
+                    <input [(ngModel)]="this.userProfile.accountId"
+                           [disabled]="!this.editProfile"
+                           [value]="this.userProfile.accountId"
+                           [maxLength]="this._userValidationService.ACCOUNTID_MAX_LENGTH"
+                           [minLength]="this._userValidationService.ACCOUNTID_MIN_LENGTH"
+                           autocomplete="uc-accountId"
+                           class="form-control noAutoFill" id="accountId"
+                           maxlength="15"
+                           minlength="3"
+                           name="accountId"
+                           type="text">
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="ml-lg-5 card col-md-4">
+
+            <div class="card-header card-header-danger">
+              <h4 class="card-title">Address</h4>
+            </div>
+
+            <div class="card-body">
+              <div class="pt-2 col-xs-6">
+                <label for="city">City:</label>
+                <input [(ngModel)]="this.userProfile.address.city"
+                       [disabled]="!this.editProfile"
+                       [value]="this.userProfile.address.city"
+                       [maxLength]="this._userValidationService.ADDRESS_CITY_MAX_LENGTH"
+                       [minLength]="this._userValidationService.ADDRESS_CITY_MIN_LENGTH"
+                       class="form-control noAutoFill"
+                       id="city"
+                       autocomplete="uc-city"
+                       name="city"
+                       type="text">
+              </div>
+
+              <div class="pt-2 col-xs-6">
+                <label for="street">Street:</label>
+                <input [(ngModel)]="this.userProfile.address.street"
+                       [disabled]="!this.editProfile"
+                       [value]="this.userProfile.address.street"
+                       [maxLength]="this._userValidationService.ADDRESS_STREET_MAX_LENGTH"
+                       [minlength]="this._userValidationService.ADDRESS_STREET_MIN_LENGTH"
+                       class="form-control noAutoFill"
+                       id="street"
+                       autocomplete="uc-street"
+                       name="street"
+                       type="text">
+              </div>
+
+              <div class="pt-2 col-xs-6">
+                <label for="psc">zip code:</label>
+                <input [(ngModel)]="this.userProfile.address.psc"
+                       [disabled]="!this.editProfile"
+                       [value]="this.userProfile.address.psc"
+                       [maxlength]="this._userValidationService.ADDRESS_PSC_MAX_LENGTH"
+                       [minlength]="this._userValidationService.ADDRESS_PSC_MIN_LENGTH"
+                       class="form-control noAutoFill"
+                       id="psc"
+                       autocomplete="uc-psc"
+                       name="psc"
+                       type="text">
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+
+          <div class="w-100 col-md-3 col-xl-3">
+            <button (click)="this.serverDeleteAccount()" class="w-100 btn-info btn">Delete account
+            </button>
+          </div>
+
+          <div class="w-100 col-md-3 col-xl-3">
+            <button (click)="this.showChangePassword = !this.showChangePassword"
+                    [class.btn-danger]="this.showChangePassword" [class.btn-info]="!this.showChangePassword"
+                    class="w-100 btn">
+              {{!this.showChangePassword ? 'Change password ' : ' Cancel change'}}
+            </button>
+          </div>
+
+
+          <div class="w-100  col-md-3 offset-xl-2 col-xl-2">
+            <button (click)="this.editProfileClicked()" [class.btn-danger]="this.editProfile"
+                    [class.btn-success]="!this.editProfile" class="btn w-100">
+              {{!this.editProfile ? 'Edit ' : ' Cancel editing'}}
+            </button>
+          </div>
+
+          <div class="w-100 col-md-3 col-xl-2">
+            <button (click)="this.saveProfileClicked()" [class.btn-danger]="!this.editProfile"
+                    [class.btn-success]="this.editProfile" [disabled]="!this.editProfile"
+                    class="btn-danger w-100 btn">Save
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="this.validationInfo" class="mt-5 text-danger">
+          <h3 *ngFor="let validationInf of this.validationInfo">{{validationInf}}</h3>
+        </div>
+
+        <div class="mt-5" style="font-weight: bold">
+          <div *ngIf="this.serverUpdateStatus==1" class="pt-2 text-success">
+            <h3>{{this.serverUpdateResponse}}</h3>
+          </div>
+
+          <div *ngIf="this.serverUpdateStatus==-1" class="pt-2 text-danger">
+            <h3>{{this.serverUpdateResponse}}</h3>
+          </div>
+        </div>
+
+
+        <div *ngIf="this.showChangePassword" class="offset-0 col-12 offset-md-2 col-md-8 offset-xl-3 col-xl-7">
+          <app-password-change-child (funcReturnChildData)='this.functionGetChildInputsPasswords($event)'
+                                     [email]="this.userProfile.email"></app-password-change-child>
+          <div [class.text-danger]="this.serverChangeResponseStatus===-1"
+               [class.text-success]="this.serverChangeResponseStatus===1" class="text-center">
+            <h3>{{this.serverChangeResponse}}</h3></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="this.loading" class="loader-box">
+  <app-spinner-module></app-spinner-module>
+</div>
+

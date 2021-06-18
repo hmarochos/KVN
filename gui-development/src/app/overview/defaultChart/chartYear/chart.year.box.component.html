@@ -1,0 +1,58 @@
+<div class="card card-chart">
+
+
+  <div *ngIf="this.display === 'chart'" class="card-header card-header-warning">
+    <div class="float-left pull-right ct-chart">Bar chart - annual development</div>
+    <div class="pull-right" style="display: inline-block">
+      <i (click)="this.minimize()" class="zoomIcon material-icons" hide-delay="0" tooltip="remove">remove</i>
+      <i (click)="this.minusSize()" class="zoomIcon material-icons" hide-delay="0" tooltip="zoom_out">zoom_out</i>
+      <i (click)="this.plusSize()" class="zoomIcon material-icons" hide-delay="0" tooltip="zoom_in">zoom_in</i>
+      <i (click)="this.maximize()" class="zoomIcon material-icons" hide-delay="0" tooltip="fullscreen">fullscreen</i>
+      <i (click)="this.closeChart('yearBox')" class="zoomIcon material-icons">clear</i>
+    </div>
+  </div>
+  <div *ngIf="this.display === 'chart'" class="card-body">
+    <chart [data]="this.data" [ngStyle]="{'height': 20*0.19*this.boxYearChartSize + 'em'}" [options]="this.options"
+           [type]="this.type"></chart>
+  </div>
+
+  <div *ngIf="this.display === 'result'" class="card-header card-header-warning">
+    <div class="float-left pull-right ct-chart">You can fulfill the following wishes by <span
+      class="font-weight-bold text-danger">{{this.yearPlan.annualOverviewMinus25List.length}}</span> year.
+    </div>
+    <div class="pull-right" style="display: inline-block">
+      <i (click)="this.minimize()" class="zoomIcon material-icons" hide-delay="0" tooltip="remove">remove</i>
+      <i (click)="this.minusSize()" class="zoomIcon material-icons" hide-delay="0" tooltip="zoom_out">zoom_out</i>
+      <i (click)="this.plusSize()" class="zoomIcon material-icons" hide-delay="0" tooltip="zoom_in">zoom_in</i>
+      <i (click)="this.maximize()" class="zoomIcon material-icons" hide-delay="0" tooltip="fullscreen">fullscreen</i>
+      <i (click)="this.closeChart('yearBox')" class="zoomIcon material-icons">clear</i>
+    </div>
+  </div>
+  <div *ngIf="this.display === 'result'" class="card-body">
+    <app-year-result [size]="this.boxYearChartSize"
+                     [yearPlan]="this.yearPlan"></app-year-result>
+  </div>
+
+
+  <div class="card-footer">
+    <div class="pull-center">
+      <i (click)="this.removeYear()" [hidden]="this.display === 'result'" class="arrow-success material-icons"
+         hide-delay="0" tooltip="Odebrat rok">arrow_back</i>
+    </div>
+    <div class="pull-center">
+      <i (click)="this.display = 'result'" [hidden]="this.display === 'result' || this.numberOfItems === 0"
+         class="arrow-success text-danger material-icons" hide-delay="0" tooltip="Zobrazit výsledky">subject</i>
+      <i (click)="this.display = 'chart'" [hidden]="this.display === 'chart'"
+         class="arrow-success text-danger material-icons" hide-delay="0" tooltip="Show graph">show_chart</i>
+    </div>
+    <div class="pull-right">
+      <i (click)="this.addYear()" [hidden]="this.display === 'result'" class="arrow-success material-icons"
+         hide-delay="0" tooltip="Přidat rok">arrow_forward</i>
+    </div>
+  </div>
+
+</div>
+
+
+
+

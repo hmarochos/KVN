@@ -1,0 +1,78 @@
+<div class="container-fluid">
+  <div class="p-5 card">
+    <h1>Transaction Summary</h1>
+
+    <h4>Set the time interval:</h4>
+    <div class="col-md-8">
+      <label class="bmd-label-floating" for="dateFrom">Transactions from:</label>
+      <input (dateTimePickerChange)="this.setDateFrom($event)" [(ngModel)]="this.dateFrom"
+             [dateTimePicker]="this.dateFrom" [value]="this.dateFrom " class="form-control"
+             id="dateFrom" name="dateFrom" readonly/>
+
+      <label class="bmd-label-floating" for="dateTo">Transactions to:</label>
+      <input (dateTimePickerChange)="this.setDateTo($event)" [(ngModel)]="this.dateTo"
+             [dateTimePicker]="this.dateTo" [value]="this.dateTo " class="form-control"
+             id="dateTo" name="dateTo" readonly/>
+      <div class="offset-xl-6">
+        <button (click)="this.showTransactionClicked()" [disabled]="this.buttonDisabled" class="btn btn-success w-100">
+          Display
+        </button>
+      </div>
+
+      <div *ngIf="this.responseMessage" class="text-danger">
+        <h4>{{this.responseMessage.message}}</h4>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="this.transactionItems && this.responseMessage.status !== -1" class="card">
+    <div class="card-header card-header-danger">
+      <h4 class="card-title ">Transactions</h4>
+      <p class="card-category">Overview of all transactions from: <span
+        class="font-weight-bold text-dark">{{this.transactionDateFromText}}</span> to: <span
+        class="font-weight-bold text-dark">{{this.transactionDateToText}}</span></p>
+    </div>
+    <div class="card-body">
+
+      <div *ngIf="this.transactionItems.length === 0">
+        <h4>No transactions were found during this term.</h4>
+      </div>
+      <div *ngIf="this.transactionItems.length !== 0" class="table-responsive">
+        <table class="table">
+          <thead class="text-danger text-center">
+          <th> Amount </th>
+          <th> Description </th>
+          <th> Payment type </th>
+          <th> Transaction type </th>
+          <th> Posting Date </th>
+          <th> Constant symbol </th>
+          <th> Variable symbol </th>
+          <th> Specific symbol </th>
+          </thead>
+
+          <tbody class="text-center">
+          <tr *ngFor="let transactionItem of this.transactionItems">
+            <td CLASS="font-weight-bold" [class.text-danger]="transactionItem.direction === 'OUTGOING'"
+                [class.text-success]="transactionItem.direction !== 'OUTGOING'">
+              {{transactionItem.direction === 'OUTGOING' ? '-' : ''}}{{transactionItem.value.amount}}</td>
+            <td>{{transactionItem.partyDescription}}</td>
+            <td>{{transactionItem.direction === 'OUTGOING' ? 'Outgoing' : 'Incoming'}}</td>
+            <td>{{(this.translate(transactionItem.transactionType).charAt(0).toUpperCase() + this.translate(transactionItem.transactionType).toLowerCase().slice(1)).replace('_', ' ')}}</td>
+            <td>{{transactionItem.valueDate.replace('T', ' ').replace('Z', '')}}</td>
+            <td>{{transactionItem.additionalInfoDomestic.constantSymbol}}</td>
+            <td>{{transactionItem.additionalInfoDomestic.variableSymbol}}</td>
+            <td>{{transactionItem.additionalInfoDomestic.specificSymbol}}</td>
+          </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<div *ngIf="this.loading" class="loader-box">
+  <app-spinner-module></app-spinner-module>
+</div>

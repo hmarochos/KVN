@@ -1,0 +1,100 @@
+<div class="modal fade mt-5" id="loginModal" role="" tabindex="-1">
+  <div class="modal-dialog mt-5 modal-login" role="document">
+    <div class="modal-content">
+      <div class="card card-signup card-plain">
+        <div class="modal-body">
+          <div class="col-md-12">
+            <div class="card-header card-header-danger">
+              <h4 class="card-title">Login</h4>
+              <p class="card-category">Fill in your credentials</p>
+            </div>
+
+            <div class="card-body">
+
+              <form #loginForm="ngForm" (submit)="doSign(loginForm)">
+
+                <div [class.has-danger]="loginEmailControl.invalid && loginEmailControl.dirty"
+                     [class.has-success]="loginEmailControl.valid"
+                     class="form-group bmd-form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="material-icons">email</i></div>
+                    </div>
+
+                    <input
+                      #loginEmailControl="ngModel"
+                      [(ngModel)]="username"
+                      class="form-control"
+                      name="username" placeholder="Email..."
+                      required
+                      autocomplete="email"
+                      type="email">
+
+                    <span *ngIf="loginEmailControl.valid" class="form-control-feedback">
+                               <i class="material-icons">done</i>
+                      </span>
+                    <span *ngIf="loginEmailControl.invalid && loginEmailControl.dirty"
+                          class="material-icons form-control-feedback">clear
+                      </span>
+                  </div>
+                </div>
+
+
+                <div [class.has-danger]="loginPassControl.invalid && loginPassControl.dirty"
+                     [class.has-success]="loginPassControl.valid"
+                     class="form-group bmd-form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="material-icons">lock_outline</i></div>
+                    </div>
+                    <input
+                      #loginPassControl="ngModel"
+                      [(ngModel)]="password" class="form-control"
+                      maxlength="50"
+                      minlength="8"
+                      name="password" placeholder="Password ..."
+                      required
+                      autocomplete="current-password"
+                      type="password">
+
+                    <span *ngIf="loginPassControl.valid" class="form-control-feedback">
+                               <i class="material-icons">done</i>
+                      </span>
+                    <span *ngIf="loginPassControl.invalid && loginPassControl.dirty"
+                          class="material-icons form-control-feedback">clear
+                      </span>
+                  </div>
+                </div>
+                <div class="offset-3 custom-control custom-checkbox mb-3" style="cursor: pointer">
+                  <input [(ngModel)]="remember" class="custom-control-input" id="remember" name="remember"
+                         style="cursor: pointer"
+                         type="checkbox">
+                  <label class="custom-control-label" for="remember" style="cursor: pointer">Remember
+                    data?</label>
+                </div>
+                <div *ngIf="remember" class="offset-3 text-success">Data will be remembered.</div>
+
+                <div class="pt-3 text-center justify-content-center">
+                  <button [class.btn-danger]="!loginForm.valid" [class.btn-success]="loginForm.valid" class="btn">
+                    Log in
+                  </button>
+
+                  <br/>
+                  <br/>
+                  <div *ngFor="let logInf of signInInfo" class="text-danger">{{logInf}}</div>
+                  <div [class.text-danger]="statusState===-1"
+                       [class.text-success]="statusState===2">{{statusText}}</div>
+                  <br/>
+                  <div *ngIf="statusState===1" class="text-success spinner-border" role="status"></div>
+
+                </div>
+              </form>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

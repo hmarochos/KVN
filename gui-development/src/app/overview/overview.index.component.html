@@ -1,0 +1,49 @@
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Savings Overview</h4>
+            <p class="card-category">All in one place.</p>
+          </div>
+          <div class="card-body">
+
+            <ul class="text-secondary nav nav-pills nav-pills-icons" role="tablist">
+
+              <li class="nav-item">
+                <a (click)="this.indexMenu=1" class="text-dark nav-link active" data-toggle="tab" href="#dashboard-1"
+                   role="tab">
+                  <i class="material-icons">dashboard</i>
+                  Savings
+                </a>
+              </li>
+              <li class="nav-item">
+                <a (click)="this.indexMenu=2" class="text-dark nav-link" data-toggle="tab" href="#schedule-1"
+                   role="tab">
+                  <i class="material-icons">schedule</i>
+                  Transaction overview
+                </a>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+
+
+        <div class="tab-content tab-space">
+          <div class="tab-pane active" id="dashboard-1">
+            <app-chart [menuIndex]="this.indexMenu"></app-chart>
+          </div>
+
+          <div class="tab-pane" id="schedule-1">
+            <app-transaction-overview></app-transaction-overview>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+

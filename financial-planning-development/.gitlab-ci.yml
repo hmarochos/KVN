@@ -1,0 +1,55 @@
+stages:
+  - clean_up
+  - compile
+  - test
+  - deploy
+
+# Fetch is faster as it re-uses the project workspace (falling back to clone if it doesn't exist)
+variables:
+  GIT_STRATEGY: fetch
+  # Number of attempts to fetch sources running a job
+  GET_SOURCES_ATTEMPTS: 3
+
+job_clean_up:
+  stage: clean_up
+  tags:
+    - financial-planning
+  script:
+    - echo "Clean up"
+    - mvn clean
+
+job_compile:
+  stage: compile
+  tags:
+    - financial-planning
+  # The job runs only if previous job succeeds
+  when: on_success
+  # if this job fails, the next stage will not be performed
+  allow_failure: false
+  script:
+    - echo "Compile"
+    - mvn compile
+
+job_test:
+  stage: test
+  tags:
+    - financial-planning
+  when: on_success
+  allow_failure: false
+  script:
+    - echo "Performing tests"
+    - mvn test
+
+job_deploy_to_heroku:
+  stage: deploy
+  tags:
+    - financial-planning
+  when: on_success
+  only:
+    - master
+  environment:
+    name: heroku
+    url: https://financial-planning-api.herokuapp.com
+  script:
+    - echo "Deploy app to Heroku"
+    - mvn heroku:deploy -Dmaven.test.skip=true

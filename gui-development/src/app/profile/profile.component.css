@@ -1,0 +1,32 @@
+input:enabled {
+  background: lightgray;
+  cursor: pointer;
+}
+
+input:disabled {
+  cursor: auto !important;
+  background: white !important;
+}
+
+
+input:-webkit-autofill:disabled {
+  -webkit-box-shadow: 0 0 0 50px white inset; /*your box-shadow*/
+  -webkit-text-fill-color: #495066ff;
+}
+
+input:-webkit-autofill:enabled {
+  -webkit-box-shadow: 0 0 0 50px lightgray inset; /*your box-shadow*/
+  -webkit-text-fill-color: #495066ff;
+}
+
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 50px lightgray inset; /*your box-shadow*/
+  -webkit-text-fill-color: #495066ff;
+}
+
+label {
+  color: black !important;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 300;
+  font-size: 1.5em;
+}

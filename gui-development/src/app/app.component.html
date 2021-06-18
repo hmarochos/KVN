@@ -1,0 +1,124 @@
+<div class="wrapper ">
+
+  <!-- levé menu-->
+  <div class="sidebar" data-background-color="white" data-color="danger" data-image="./src/assets/img/sidebar-1.jpg">
+    <div class="logo" style="padding-right: 10%">
+      <div class="simple-text logo-normal">
+        <img alt="Logo" height="30%" src="/src/assets/img/angular-js-logo.png" width="30%"/>
+        KVN - finance
+      </div>
+    </div>
+    <div class="sidebar-wrapper">
+      <ul class="nav">
+
+        <li [routerLinkActiveOptions]="{exact:true}" class="nav-item " routerLinkActive="active">
+          <a class="nav-link" routerLink="/">
+            <i class="material-icons">home</i>
+            <p>Home</p>
+          </a>
+        </li>
+
+        <li class="nav-item " routerLinkActive="active">
+          <a class="nav-link" routerLink="/about">
+            <i class="material-icons">directions_walk</i>
+            <p>About us</p>
+          </a>
+        </li>
+
+        <li class="nav-item " routerLinkActive="active">
+          <a class="nav-link" href="./typography.html" routerLink="contact">
+            <i class="material-icons">email</i>
+            <p>Contacts</p>
+          </a>
+        </li>
+
+        <li *ngIf="!_cookiesService.get('accessToken')" class="nav-item " routerLinkActive="active">
+          <a class="nav-link" routerLink="/register">
+            <i class="material-icons">content_paste</i>
+            <p>Registration</p>
+          </a>
+        </li>
+
+        <li *ngIf="!_cookiesService.get('accessToken')" class="nav-item ">
+          <a class="nav-link" data-target="#loginModal" data-toggle="modal">
+            <i class="material-icons">lock</i>
+            <p>Login</p>
+          </a>
+        </li>
+
+        <li *ngIf="_cookiesService.get('accessToken')" class="nav-item " routerLinkActive="active">
+          <a class="nav-link" routerLink="overview">
+            <i class="material-icons">bar_chart</i>
+            <p>My overview</p>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+  <!-- /levé menu -->
+
+
+  <!-- Zbytek těla - mimo levého menu-->
+  <div class="main-panel">
+
+    <!-- Navigace horní -->
+    <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+      <div class="container-fluid">
+        <div class="navbar-wrapper">
+          <a class="navbar-brand" href="javascript:;">KVN - With us, your finances are in order.</a>
+        </div>
+        <button aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler"
+                data-toggle="collapse" type="button">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="navbar-toggler-icon icon-bar"></span>
+          <span class="navbar-toggler-icon icon-bar"></span>
+          <span class="navbar-toggler-icon icon-bar"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end">
+          <div class="navbar-form"></div>
+
+          <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+              <a *ngIf="_cookiesService.get('accessToken')" aria-expanded="false" aria-haspopup="true" class="nav-link"
+                 data-toggle="dropdown" id="navbarDropdownProfile">
+                <i class="material-icons">person</i>
+                <p class="d-lg-none d-md-block">
+                  Account
+                </p>
+              </a>
+              <div aria-labelledby="navbarDropdownProfile" class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item link" routerLink="profile">Profile</a>
+                <div class="dropdown-divider"></div>
+                <a [queryParams]="{status:'logout'}" [routerLink]="['/logout']" class="dropdown-item link">Log out</a>
+              </div>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+    <!-- /navigace horní-->
+
+
+    <!-- Zde probíhá render-->
+    <router-outlet></router-outlet>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container-fluid">
+
+        <div class="copyright float-center">
+          &copy; Copyright {{getFullYear()}} - KVN Finance All Rights Reserved
+        </div>
+      </div>
+    </footer>
+    <!--/footer -->
+  </div>
+  <!--/tělo -->
+</div>
+<app-modal></app-modal>
+<app-chatbot></app-chatbot>

@@ -1,0 +1,30 @@
+.paragraph-title-1 {
+  font-weight: bold;
+  font-size: 2em;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.paragraph-title-2 {
+  font-weight: bold;
+  font-size: 1.3em;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.paragraph-title-3 {
+  font-weight: bold;
+  font-size: 1em;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.paragraph-content {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
